@@ -30,7 +30,7 @@ main_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}****************** Script (V01.R02) para Proxmox **********************${NORMAL}"
+    echo -e "${MENU}****************** Script (V01.R01) para Proxmox **********************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
     echo " "
     echo -e "${MENU}**${NUMBER} 1)${MENU} Atualização, instalação e upgrade do sistema ${NORMAL}"
@@ -703,9 +703,9 @@ echo
 			;;
 				6)	clear;
 		echo cd\ > /etc/profile.d/proxmox-ini.sh
-		echo cd /PT/SCRIPTS >> /etc/profile.d/proxmox-ini.sh
+		echo cd /TcTI/SCRIPTS >> /etc/profile.d/proxmox-ini.sh
 		echo rm proxmox-conf.sh	>> /etc/profile.d/proxmox-ini.sh
-		echo wget www.pontotecnico.com.br/APPS/proxmox-conf.sh proxmox-conf.sh >> /etc/profile.d/proxmox-ini.sh
+		echo wget https://raw.githubusercontent.com/TcTI-BR/PROXMOX-SCRIPTS/main/proxmox-conf.sh >> /etc/profile.d/proxmox-ini.sh
 		echo chmod +x proxmox-conf.sh	>> /etc/profile.d/proxmox-ini.sh
 		echo ./proxmox-conf.sh	>> /etc/profile.d/proxmox-ini.sh
 		chmod +x /etc/profile.d/proxmox-ini.sh
