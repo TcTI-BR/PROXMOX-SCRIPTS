@@ -108,11 +108,11 @@ update_menu(){
 			  exit;
 			else
 			  case $opt in
-			  1) clear;
+				1) clear;
 				mv /etc/apt/sources.list.d/pve-enterprise.list /root/
 				systemctl stop pve-ha-lrm
 				systemctl stop pve-ha-crm
-				echo "deb http://download.proxmox.com/debian/corosync-3/ stretch main" > /etc/apt/sources.list.d/corosync3.list
+				echo "deb http://download.proxmox.com/debian/corosync-3/ stretch main" > /etc/apt/corosync3.list
 				apt update
 				apt dist-upgrade -y
 				systemctl start pve-ha-lrm
@@ -120,9 +120,9 @@ update_menu(){
 				apt update
 				apt dist-upgrade -y
 				sed -i 's/stretch/buster/g' /etc/apt/sources.list
-				echo "deb http://download.proxmox.com/debian/pve buster pve-no-subscription" > /etc/apt/sources.list.d/sources.list
+				echo "deb http://download.proxmox.com/debian/pve buster pve-no-subscription" > /etc/apt/sources.list
 				sed -i -e 's/stretch/buster/g' /etc/apt/sources.list.d/pve-install-repo.list 
-				echo "deb http://download.proxmox.com/debian/ceph-luminous buster main" > /etc/apt/sources.list.d/ceph.list
+				echo "deb http://download.proxmox.com/debian/ceph-luminous buster main" > /etc/apt/sources.list
 				apt update
 				apt dist-upgrade -y
 				rm /etc/apt/sources.list.d/corosync3.list
