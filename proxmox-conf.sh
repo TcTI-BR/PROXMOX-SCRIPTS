@@ -112,7 +112,7 @@ update_menu(){
 				mv /etc/apt/sources.list.d/pve-enterprise.list /root/
 				systemctl stop pve-ha-lrm
 				systemctl stop pve-ha-crm
-				echo "deb http://download.proxmox.com/debian/corosync-3/ stretch main" > /etc/apt/corosync3.list
+				echo "deb http://download.proxmox.com/debian/corosync-3/ stretch main" > /etc/apt/sources.list.d/corosync3.list
 				apt update
 				apt dist-upgrade -y
 				systemctl start pve-ha-lrm
@@ -127,7 +127,7 @@ update_menu(){
 				apt dist-upgrade -y
 				rm /etc/apt/sources.list.d/corosync3.list
 				apt update
-				apt dist-upgrade -yellow
+				apt dist-upgrade -y
 				apt remove linux-image-amd64
 				systemctl disable display-manager
 				read -p "Pressione uma tecla para continuar..."
