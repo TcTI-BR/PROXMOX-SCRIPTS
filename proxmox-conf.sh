@@ -120,9 +120,9 @@ update_menu(){
 				apt update
 				apt dist-upgrade -y
 				sed -i 's/stretch/buster/g' /etc/apt/sources.list
-				echo "deb http://download.proxmox.com/debian/pve buster pve-no-subscription" > /etc/apt/sources.list
+				echo "deb http://download.proxmox.com/debian/pve buster pve-no-subscription" > /etc/apt/sources.list.d/sources.list
 				sed -i -e 's/stretch/buster/g' /etc/apt/sources.list.d/pve-install-repo.list 
-				echo "deb http://download.proxmox.com/debian/ceph-luminous buster main" > /etc/apt/sources.list
+				echo "deb http://download.proxmox.com/debian/ceph-luminous buster main" > /etc/apt/sources.list.d/ceph.list
 				apt update
 				apt dist-upgrade -y
 				rm /etc/apt/sources.list.d/corosync3.list
