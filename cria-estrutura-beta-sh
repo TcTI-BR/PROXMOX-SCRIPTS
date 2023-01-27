@@ -1,5 +1,0 @@
-mkdir -p /TcTI/SCRIPTS
-cd /TcTI/SCRIPTS
-wget https://raw.githubusercontent.com/TcTI-BR/PROXMOX-SCRIPTS/main/proxmox-ini-beta.sh /TcTI/SCRIPTS/proxmox-ini-beta.sh
-chmod +x /TcTI/SCRIPTS/proxmox-ini-beta.sh
-/TcTI/SCRIPTS/proxmox-ini-beta.sh
