@@ -2,6 +2,45 @@
 
 # toda a base do script foi inspirado no  https://github.com/Tontonjo/proxmox_toolbox.git
  
+main_menu(){
+    clear
+    NORMAL=`echo "\033[m"`
+    MENU=`echo "\033[36m"` #Azul
+    NUMBER=`echo "\033[33m"` #Amarelo
+    FGRED=`echo "\033[41m"`
+    RED_TEXT=`echo "\033[31m"`
+    ENTER_LINE=`echo "\033[33m"`
+    echo -e "${MENU}****************** Script (V01.R01) para Proxmox **********************${NORMAL}"
+    echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
+    echo " "
+    echo -e "${MENU}**${NUMBER} 1)${MENU} Proxmox Virtual Environment ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} 2)${MENU} Proxmox Backup Server ${NORMAL}"
+    echo " "
+    echo -e "${MENU}***********************************************************************${NORMAL}"
+    echo -e "${ENTER_LINE}Digite um numero dentre as opções acima ou pressione ${RED_TEXT}ENTER ${ENTER_LINE}para sair.${NORMAL} "
+    read -rsn1 opt
+	while [ opt != '' ]
+  do
+    if [[ $opt = "" ]]; then
+      exit;
+    else
+      case $opt in
+   	
+	   	 1) clear;
+		pve_menu
+      ;;
+	     2) clear;
+		pbs_menu
+   ;;	  
+         0)
+	  clear
+      exit
+      ;;
+      esac
+    fi
+  done
+  main_menu
+}
 
 version=1.1
 # changelog
@@ -22,7 +61,7 @@ backupdir="/root/"
 backup_content="/etc/ssh/sshd_config /root/.ssh/ /etc/fail2ban/ /etc/systemd/system/*.mount /etc/network/interfaces /etc/sysctl.conf /etc/resolv.conf /etc/hosts /etc/hostname /etc/cron* /etc/aliases /etc/snmp/ /etc/smartd.conf /usr/share/snmp/snmpd.conf /etc/postfix/ /etc/pve/ /etc/lvm/ /etc/modprobe.d/ /var/lib/pve-firewall/ /var/lib/pve-cluster/  /etc/vzdump.conf /etc/ksmtuned.conf /etc/proxmox-backup/"
 # ---------------FIM DAS VARIAVEIS DE SISTEMA-----------------
 
-main_menu(){
+pve(){
     clear
     NORMAL=`echo "\033[m"`
     MENU=`echo "\033[36m"` #Azul
@@ -80,7 +119,7 @@ main_menu(){
       esac
     fi
   done
-  main_menu
+  pve_menu
 }
 
 update_menu(){
@@ -175,7 +214,7 @@ update_menu(){
 			  update_menu;	
 				;;
       0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -185,7 +224,7 @@ update_menu(){
       ;;
 
       *)clear;
-      main_menu;
+     pve_menu_menu;
       ;;
       esac
     fi
@@ -269,7 +308,7 @@ disco_menu(){
 			disco_menu
 			;;
       0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -279,7 +318,7 @@ disco_menu(){
       ;;
 
       *)clear;
-      main_menu;
+      pve_menu;
       ;;
       esac
     fi
@@ -336,7 +375,7 @@ bkp_menu(){
 		bkp_menu
 			;;					
       0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -346,7 +385,7 @@ bkp_menu(){
       ;;
 
       *)clear;
-      main_menu;
+      pve_menu;
       ;;
       esac
     fi
@@ -563,7 +602,7 @@ email_menu(){
 	  email_menu
 			;;
       0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -573,7 +612,7 @@ email_menu(){
       ;;
 
       *)clear;
-      main_menu;
+      pve_menu;
       ;;
       esac
     fi
@@ -750,10 +789,10 @@ echo
 			9)	clear;
 		startx
 		clear	  
-	  main_menu
+	  pve_menu
 			;;
 	  0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -763,7 +802,7 @@ echo
       ;;
 
       *)clear;
-      main_menu;
+      pve_menu;
       ;;
       esac
     fi
@@ -816,7 +855,7 @@ lan_menu(){
 	  lan_menu	
 			;;
 	  0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -826,7 +865,7 @@ lan_menu(){
       ;;
 
       *)clear;
-      main_menu;
+      pve_menu;
       ;;
       esac
     fi
@@ -887,7 +926,7 @@ com_menu(){
 			;;
 
 	  0) clear;
-      main_menu;
+      pve_menu;
       ;;
 
       x)exit;
@@ -897,11 +936,11 @@ com_menu(){
       ;;
 
       *)clear;
-      main_menu;
+      pve_menu;
       ;;
       esac
     fi
   done
 }
 
-main_menu
+pve_menu
