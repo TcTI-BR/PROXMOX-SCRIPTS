@@ -942,5 +942,3 @@ com_menu(){
     fi
   done
 }
-
-pve_menu
