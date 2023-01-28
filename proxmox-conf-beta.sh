@@ -436,7 +436,7 @@ bkp_menu(){
 		mkdir /mnt/$CAMINHOBKP/BKP-PVE
 		mkdir -p /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU
 		echo "CAMINHOLOCAL=$CAMINHOBKP" > /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh						
-		echo "PVENAME=$(hostname)" > /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
+		echo "PVENAME=$(hostname)" >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo "CAMINHOEMAIL=$CAMINHOEMAILBKP" >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/pve/vzdump.cron' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/pve/storage.cfg' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
