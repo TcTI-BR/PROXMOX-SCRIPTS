@@ -593,10 +593,10 @@ bkp_menu(){
 				echo -e "\033[33mDeseja restaurar a pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m (s/n) \033[0m"
 					read -p "" QEMUSERVER
 				if [ "$QEMUSERVER"  = "s" ]; then
-			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/nodes/PVE/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
+			cp -r /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
 		fi
 		else
-			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/nodes/PVE/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
+			cp -r /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
 				echo -e "\033[33mA pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m não foi encontrada, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
 			read -p ""
 		fi
