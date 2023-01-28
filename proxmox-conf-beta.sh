@@ -433,8 +433,9 @@ bkp_menu(){
 		read CAMINHOBKP
 		echo "Qual o e-mail que vai receber uma copia dos arquivos de configuracao?"
 		read CAMINHOEMAILBKP
+		PVENAME=$(hostname)
 		mkdir /mnt/$CAMINHOBKP/BKP-PVE
-		mkdir /TcTI/SCRIPTS/BKP-PVE
+		mkdir -p /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU
 		echo "CAMINHOLOCAL=$CAMINHOBKP" > /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo "CAMINHOEMAIL=$CAMINHOEMAILBKP" >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/pve/vzdump.cron' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
@@ -443,15 +444,14 @@ bkp_menu(){
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/pve/datacenter.cfg' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/network/interfaces' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/resolv.conf' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
-		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/cron*' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /var/spool/cron/crontabs/root' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/hostname' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
-		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/pve/nodes/PVE01/qemu-server' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
+		echo 'cp -r /etc/pve/nodes/$PVENAME/qemu-server/ /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
+		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/hosts' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/fstab' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
-		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/resolv.conf' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/pve/jobs.cfg' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
-		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/postfix' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
+		echo 'zip /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip /etc/postfix/' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'echo "Log de email do dia $(date +%d-%m-%Y)" > /TcTI/SCRIPTS/BKP-PVE/msg.txt' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		echo 'mutt -s "$(hostname -f) - Backup diário das configurações"  $CAMINHOEMAIL < /TcTI/SCRIPTS/BKP-PVE/msg.txt  -a /mnt/$CAMINHOLOCAL/BKP-PVE/$(date +%d-%m-%Y).zip' >> /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
 		chmod +x /TcTI/SCRIPTS/BKP-PVE/BKP-PVE.sh
@@ -471,15 +471,184 @@ bkp_menu(){
 	4)	clear	
 		echo -e "\033[31mAtenção\033[33m! Essa opção vai recuperar o Backup selecionado \033[31mapagando\033[33m as configurações atuais.\033[0m"
 		read -p  " "
-		echo "Qual a unidade estão os arquivos de configuracao?"
+		echo "Qual a unidade que estão os arquivos de configuracao?"
 		read RECUPERABKP
 		mkdir /mnt/RECUPERAPVE
+		PVENAME=$(hostname)
 		mount LABEL=$RECUPERABKP /mnt/RECUPERAPVE
 		ls -t /mnt/RECUPERAPVE/BKP-PVE/ 
 		echo "Qual o arquivo a ser recuperado, não precisa da extensão EX:20-02-2023?"
 		read RESTAURABKP
 		clear
-		unzip /mnt/RECUPERAPVE/BKP-PVE/$RESTAURABKP.zip
+		unzip /mnt/RECUPERAPVE/BKP-PVE/$RESTAURABKP.zip -d /TcTI/SCRIPTS/TMP-RECUPERA
+		if [ -f /etc/fstab ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/fstab\033[33m (s/n) \033[0m"
+					read -p "" FSTAB
+				if [ "$FSTAB"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/fstab /etc/fstab
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/fstab /etc/fstab
+				echo -e "\033[33mArquivo \033[31m/etc/fstab\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+		
+		if [ -f /etc/pve/vzdump.cron ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/pve/vzdump.cron\033[33m (s/n) \033[0m"
+					read -p "" VZDUMPCRON
+				if [ "$VZDUMPCRON"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/vzdump.cron /etc/pve/vzdump.cron
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/vzdump.cron /etc/pve/vzdump.cron
+				echo -e "\033[33mArquivo \033[31m/etc/pve/vzdump.cron\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+
+		if [ -f /etc/pve/storage.cfg ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/pve/storage.cfg\033[33m (s/n) \033[0m"
+					read -p "" STORAGECFG
+				if [ "$STORAGECFG"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/storage.cfg /etc/pve/storage.cfg
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/storage.cfg /etc/pve/storage.cfg
+				echo -e "\033[33mArquivo \033[31m/etc/pve/storage.cfg\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi		
+		
+		if [ -f /etc/pve/user.cfg ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/pve/user.cfg\033[33m (s/n) \033[0m"
+					read -p "" USERCFG
+				if [ "$USERCFG"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/user.cfg /etc/pve/user.cfg
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/user.cfg /etc/pve/user.cfg
+				echo -e "\033[33mArquivo \033[31m/etc/pve/user.cfg\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi		
+		
+		if [ -f /etc/pve/datacenter.cfg ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/pve/datacenter.cfg\033[33m (s/n) \033[0m"
+					read -p "" DATACENTERCFG
+				if [ "$DATACENTERCFG"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/datacenter.cfg /etc/pve/datacenter.cfg
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/datacenter.cfg /etc/pve/datacenter.cfg
+				echo -e "\033[33mArquivo \033[31m/etc/pve/datacenter.cfg\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi		
+		
+		if [ -f /etc/network/interfaces ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/network/interfaces\033[33m (s/n) \033[0m"
+					read -p "" INTERFACES
+				if [ "$INTERFACES"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/network/interfaces /etc/network/interfaces
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/network/interfaces /etc/network/interfaces
+				echo -e "\033[33mArquivo \033[31m/etc/network/interfaces\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi		
+		
+		if [ -f /etc/resolv.conf ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/resolv.conf\033[33m (s/n) \033[0m"
+					read -p "" RESOLVCONF
+				if [ "$RESOLVCONF"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/resolv.conf /etc/resolv.conf
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/resolv.conf /etc/resolv.conf
+				echo -e "\033[33mArquivo \033[31m/etc/resolv.conf\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+				
+		if [ -f /var/spool/cron/crontabs/root ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/var/spool/cron/crontabs/root\033[33m (s/n) \033[0m"
+					read -p "" CRONTABROOT
+				if [ "$CRONTABROOT"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/var/spool/cron/crontabs/root /var/spool/cron/crontabs/root
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/var/spool/cron/crontabs/root /var/spool/cron/crontabs/root
+				echo -e "\033[33mArquivo \033[31m/var/spool/cron/crontabs/root\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi		
+
+		if [ -f /etc/hostname ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/hostname\033[33m (s/n) \033[0m"
+					read -p "" HOSTNAME
+				if [ "$HOSTNAME"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/hostname /etc/hostname
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/hostname /etc/hostname
+				echo -e "\033[33mArquivo \033[31m/etc/hostname\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+
+		if [ -f /etc/pve/nodes/$PVENAME/qemu-server/ ]; then
+				echo -e "\033[33mDeseja restaurar a pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m (s/n) \033[0m"
+					read -p "" QEMUSERVER
+				if [ "$QEMUSERVER"  = "s" ]; then
+			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/nodes/PVE/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
+		fi
+		else
+			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/nodes/PVE/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
+				echo -e "\033[33mA pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m não foi encontrada, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+		
+		if [ -f /etc/hosts ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/hosts\033[33m (s/n) \033[0m"
+					read -p "" HOSTS
+				if [ "$HOSTS"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/hosts /etc/hosts
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/hosts /etc/hosts
+				echo -e "\033[33mArquivo \033[31m/etc/hosts\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+		
+		if [ -f /etc/pve/jobs.cfg ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/pve/jobs.cfg\033[33m (s/n) \033[0m"
+					read -p "" JOBSCFG
+				if [ "$JOBSCFG"  = "s" ]; then
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/jobs.cfg /etc/pve/jobs.cfg
+		fi
+		else
+			cp /TcTI/SCRIPTS/TMP-RECUPERA/etc/pve/jobs.cfg /etc/pve/jobs.cfg
+				echo -e "\033[33mArquivo \033[31m/etc/pve/jobs.cfg\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+		
+		if [ -f /etc/postfix/ ]; then
+				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/postfix/\033[33m (s/n) \033[0m"
+					read -p "" POSTFIX
+				if [ "$POSTFIX"  = "s" ]; then
+			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/etc/postfix/ /etc/postfix/
+		fi
+		else
+			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/etc/postfix/ /etc/postfix/
+				echo -e "\033[33mA pasta \033[31m/etc/postfix/\033[33m não foi encontrada, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
+			read -p ""
+		fi
+		
+
+
+
+
+
+
+
+
+
+
+		
+		
 		echo -e "\033[33m Arquivos recuperados, aperte \033[31mENTER\033[33m para reiniciar.\033[0m"
 		read -p  " "
 		umount /mnt/RECUPERAPVE/
