@@ -82,7 +82,7 @@ pve_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
     echo " "
     echo -e "${MENU}**${NUMBER} 1)${MENU} Atualização, instalação e upgrade do sistema ${NORMAL}"
@@ -147,7 +147,7 @@ update_menu(){
 	FGRED=`echo "\033[41m"`
 	RED_TEXT=`echo "\033[31m"`
 	ENTER_LINE=`echo "\033[33m"`
-	echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+	echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
 	echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Upgrade de versões ${NORMAL}"
@@ -203,7 +203,7 @@ upgrade_menu(){
 	FGRED=`echo "\033[41m"`
 	RED_TEXT=`echo "\033[31m"`
 	ENTER_LINE=`echo "\033[33m"`
-	echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+	echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
 	echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Upgrade da versão 5x para a versão 6x ${NORMAL}"
@@ -290,7 +290,7 @@ disco_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Configura discos ${NORMAL}"
@@ -385,7 +385,7 @@ bkp_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Configura o serviço de NFS para receber o BACKUP em rede do PROXMOX ${NORMAL}"
@@ -668,7 +668,7 @@ email_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Configura o serviço de e-mail ${NORMAL}"
@@ -878,7 +878,7 @@ tweaks_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Verifica temperatura ${NORMAL}"
@@ -993,7 +993,7 @@ destranca_desliga(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Destranca VM ${NORMAL}"
@@ -1068,7 +1068,7 @@ instala_script(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Instala o script ao carregar o usuário ${NORMAL}"
@@ -1124,7 +1124,7 @@ instala_x(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Instala interface grafica e o Chromium ${NORMAL}"
@@ -1191,7 +1191,7 @@ watch_dog(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Cria o agendamento do watchdog de 10 em 10 minutos ${NORMAL}"
@@ -1282,7 +1282,7 @@ lan_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Configura rede${NORMAL}"
@@ -1336,7 +1336,7 @@ com_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}********* Script (V002.R001) para Proxmox Virtual Environment *********${NORMAL}"
+    echo -e "${MENU}********* Script ($version) para Proxmox Virtual Environment *********${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Comandos linux ${NORMAL}"
@@ -1399,7 +1399,7 @@ pbs_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+    echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
     echo " "
     echo -e "${MENU}**${NUMBER} 1)${MENU} Atualização, instalação e upgrade do sistema ${NORMAL}"
@@ -1452,7 +1452,7 @@ update_pbs_menu(){
 			FGRED=`echo "\033[41m"`
 			RED_TEXT=`echo "\033[31m"`
 			ENTER_LINE=`echo "\033[33m"`
-			echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+			echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
 			echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 			echo " "
 			echo -e "${MENU}**${NUMBER} 1)${MENU} Upgrade de versões ${NORMAL}"
@@ -1513,7 +1513,7 @@ upgrade_pbs_menu(){
 			FGRED=`echo "\033[41m"`
 			RED_TEXT=`echo "\033[31m"`
 			ENTER_LINE=`echo "\033[33m"`
-			echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+			echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
 			echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 			echo " "
 			echo -e "${MENU}**${NUMBER} 1)${MENU} Upgrade da versão 1x para a versão 2x ${NORMAL}"
@@ -1568,7 +1568,7 @@ disco_pbs_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+    echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 			echo " "
 			echo -e "${MENU}**${NUMBER} 1)${MENU} Configura discos ${NORMAL}"
@@ -1659,7 +1659,7 @@ email_pbs_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+    echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 			echo " "
 			echo -e "${MENU}**${NUMBER} 1)${MENU} Configura o serviço de e-mail ${NORMAL}"
@@ -1886,7 +1886,7 @@ tweaks_pbs_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+    echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 			echo " "
 			echo -e "${MENU}**${NUMBER} 1)${MENU} Verifica temperatura ${NORMAL}"
@@ -2019,7 +2019,7 @@ lan_pbs_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}************ Script (V002.R001) para Proxmox Backup Server ************${NORMAL}"
+    echo -e "${MENU}************ Script ($version) para Proxmox Backup Server ************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 			echo " "
 			echo -e "${MENU}**${NUMBER} 1)${MENU} Configura rede ${NORMAL}"
