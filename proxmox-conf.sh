@@ -478,14 +478,18 @@ bkp_menu(){
 		apt install zip -y
 		clear	
 		unzip /mnt/RECUPERAPVE/BKP-PVE/$RESTAURABKP.zip -d /TcTI/SCRIPTS/TMP-RECUPERA
-		
+		if [ -f /etc/pve/nodes/$PVENAME/qemu-server/ ]; then
+				echo -e "\033[33mDeseja restaurar a pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m (s/n) \033[0m"
+					read -p "" QEMUSERVER
+				if [ "$QEMUSERVER"  = "s" ]; then
+			cp -r /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
 		fi
 		else
-			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/ /etc/pve/nodes/$PVENAME/qemu-server/
+			cp -r /TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/qemu-server/ /etc/pve/nodes/$PVENAME/qemu-server/
 				echo -e "\033[33mA pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m não foi encontrada, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
 			read -p ""
 		fi
-				
+		
 		if [ -f /etc/fstab ]; then
 				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/fstab\033[33m (s/n) \033[0m"
 					read -p "" FSTAB
@@ -593,12 +597,6 @@ bkp_menu(){
 				echo -e "\033[33mArquivo \033[31m/etc/hostname\033[33m não encontrado, recuperado do backup, aperte \033[31mENTER\033[33m \033[0m"
 			read -p ""
 		fi
-
-		if [ -f /etc/pve/nodes/$PVENAME/qemu-server/ ]; then
-				echo -e "\033[33mDeseja restaurar a pasta \033[31m/etc/pve/nodes/$PVENAME/qemu-server/\033[33m (s/n) \033[0m"
-					read -p "" QEMUSERVER
-				if [ "$QEMUSERVER"  = "s" ]; then
-			cp -r /TcTI/SCRIPTS/TMP-RECUPERA/TcTI/SCRIPTS/BKP-PVE/TEMP-BKP/QEMU/ /etc/pve/nodes/$PVENAME/qemu-server/
 
 		if [ -f /etc/hosts ]; then
 				echo -e "\033[33mDeseja restaurar o arquivo \033[31m/etc/hosts\033[33m (s/n) \033[0m"
