@@ -5,10 +5,9 @@
 version=V002.R001
 # changelog
 
-echo -e "\033[33m Atenção! O uso do script fornecido é de inteira responsabilidade do utilizador. A pessoa ou empresa que forneceu o script não será responsável por quaisquer \033[31mproblemas ou danos causados\033[33m \033[0m pelo uso do mesmo.
-echo -e "\033[33m Armazenando no local \033[31m/mnt/$CAMINHOBKP/BKP-PVE\033[33m \033[0m"
-echo -e "\033[33m Envia por e-mail uma copia no endereço \033[31m$CAMINHOEMAILBKP\033[33m \033[0m"
-echo -e "\033[33m Revise as configurações acima, caso necessário refaça, utilizando o mesmo caminho no script\033[0m"
+echo -e "\033[33m Atenção! O uso do script fornecido é de inteira responsabilidade do utilizador. A pessoa ou empresa que forneceu o script não será responsável por quaisquer \033[31mproblemas ou danos causados\033[33m pelo uso do mesmo.\033[0m"
+echo -e "\033[33m Antes de utilizar o script, é importante que você faça uma avaliação cuidadosa e compreenda as implicações do seu uso. \033[31mCertifique-se de que o script é seguro e adequado\033[33m para as suas necessidades antes de utilizá-lo.\033[0m"
+echo -e "\033[33m Em resumo, \033[31mutilize o script por sua conta e risco\033[33m. A pessoa ou empresa que forneceu o script não será responsável por quaisquer problemas ou danos causados pelo seu uso. \033[0m"
 echo -e "\033[33mPressione uma tecla para continuar...\033[0m"
 read -p  " "
 clear
