@@ -37,7 +37,7 @@ main_menu(){
     FGRED=`echo "\033[41m"`
     RED_TEXT=`echo "\033[31m"`
     ENTER_LINE=`echo "\033[33m"`
-    echo -e "${MENU}******************* Script (V002.R001) para Proxmox *******************${NORMAL}"
+    echo -e "${MENU}******************* Script ($version) para Proxmox *******************${NORMAL}"
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
     echo " "
     echo -e "${MENU}**${NUMBER} 1)${MENU} Proxmox Virtual Environment ${NORMAL}"
