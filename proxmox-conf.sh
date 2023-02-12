@@ -10,7 +10,7 @@ echo -e "\033[33m Atenção! O uso do script fornecido é de inteira responsabil
 echo -e " "
 echo -e "\033[33m Antes de utilizar o script, é importante que você faça uma avaliação cuidadosa e\n compreenda as implicações do seu uso. \033[31mCertifique-se de que o script é\n seguro e adequado\033[33m para as suas necessidades antes de utilizá-lo.\033[0m"
 echo -e " "
-echo -e "\033[33m Em resumo, \033[31mutilize o script por sua conta e risco\033[33m. A pessoa ou\n empresa que forneceu o script não será responsável por quaisquer problemas ou\n  danos causadospelo seu uso. \033[0m"
+echo -e "\033[33m Em resumo, \033[31mutilize o script por sua conta e risco\033[33m. A pessoa ou empresa\n que forneceu o script não será responsável por quaisquer problemas ou\n  danos causadospelo seu uso. \033[0m"
 echo -e " "
 echo -e "\033[33mAo pressionar uma tecla você concorda com os riscos...\033[0m"
 read -p  " "
