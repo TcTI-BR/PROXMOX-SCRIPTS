@@ -2,10 +2,16 @@
 
 # toda a base do script foi inspirado no  https://github.com/Tontonjo/proxmox_toolbox.git
  
-
 version=V002.R001
 # changelog
 
+echo -e "\033[33m Atenção! O uso do script fornecido é de inteira responsabilidade do utilizador. A pessoa ou empresa que forneceu o script não será responsável por quaisquer \033[31mproblemas ou danos causados\033[33m \033[0m pelo uso do mesmo.
+echo -e "\033[33m Armazenando no local \033[31m/mnt/$CAMINHOBKP/BKP-PVE\033[33m \033[0m"
+echo -e "\033[33m Envia por e-mail uma copia no endereço \033[31m$CAMINHOEMAILBKP\033[33m \033[0m"
+echo -e "\033[33m Revise as configurações acima, caso necessário refaça, utilizando o mesmo caminho no script\033[0m"
+echo -e "\033[33mPressione uma tecla para continuar...\033[0m"
+read -p  " "
+clear
 
 # Verificando se é root
 if [[ $(id -u) -ne 0 ]] ; then echo "- Por favor execute com o root / sudo" ; exit 1 ; fi
