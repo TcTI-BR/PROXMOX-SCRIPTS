@@ -1072,7 +1072,7 @@ instala_script(){
     echo -e "${MENU}********************** Por Marcelo Machado ****************************${NORMAL}"
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Instala o script ao carregar o usuário ${NORMAL}"
-	echo -e "${MENU}**${NUMBER} 1)${MENU} Desinstala o script ao carregar o usuario ${NORMAL}"
+	echo -e "${MENU}**${NUMBER} 2)${MENU} Desinstala o script ao carregar o usuario ${NORMAL}"
 	echo -e "${MENU}**${NUMBER} 0)${MENU} Voltar ${NORMAL}"
 	echo " "
 	echo -e "${MENU}***********************************************************************${NORMAL}"
