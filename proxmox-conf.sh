@@ -14,7 +14,7 @@ echo -e "\033[33m *                                                             
 echo -e "\033[33m * Em resumo, \033[31mutilize o script por sua conta e risco\033[33m. A pessoa ou empresa          *\n *que forneceu o script não será responsável por quaisquer problemas ou            *\n *danos causadospelo seu uso.                                                      *\033[0m"
 echo -e "\033[33m *                                                                                 * \033[0m"
 echo -e "\033[33m * Ao pressionar uma tecla você concorda com os riscos...                          *\033[0m"
-echo -e "\033[33m ********************************************************************************* \033[0m"
+echo -e "\033[33m *********************************************************************************** \033[0m"
 read -p  " "
 clear
 
