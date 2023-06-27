@@ -208,6 +208,7 @@ upgrade_menu(){
 	echo " "
 	echo -e "${MENU}**${NUMBER} 1)${MENU} Upgrade da versão 5x para a versão 6x ${NORMAL}"
 	echo -e "${MENU}**${NUMBER} 2)${MENU} Upgrade da versão 6x para a versão 7x ${NORMAL}"
+ 	echo -e "${MENU}**${NUMBER} 3)${MENU} Upgrade da versão 7x para a versão 8x ${NORMAL}"
 	echo -e "${MENU}**${NUMBER} 0)${MENU} Voltar ${NORMAL}"
 	echo " "
 	echo -e "${MENU}***********************************************************************${NORMAL}"
@@ -262,6 +263,27 @@ upgrade_menu(){
 		echo "deb http://ftp.debian.org/debian bullseye-updates main contrib" >> /etc/apt/sources.list
 		echo "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription" >> /etc/apt/sources.list
 		echo "deb http://ftp.debian.org/debian bullseye main contrib" >> /etc/apt/sources.list
+		apt update
+		apt upgrade -y
+		apt dist-upgrade
+		systemctl disable display-manager
+		clear
+		read -p "Pressione uma tecla para continuar..."
+		clear
+		upgrade_menu;	
+			;;
+   		3) clear;
+		mv /etc/apt/sources.list.d/pve-enterprise.list /root/
+		clear
+  		apt update
+		apt upgrade -y
+		sed -i '/proxmox/d' /etc/apt/sources.list
+		sed -i '/debian/d' /etc/apt/sources.list
+		sed -i '/update/d' /etc/apt/sources.list
+		echo "deb http://security.debian.org/debian-security bookworm-security main contrib" >> /etc/apt/sources.list
+		echo "deb http://ftp.debian.org/debian bookworm-updates main contrib" >> /etc/apt/sources.list
+		echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" >> /etc/apt/sources.list
+		echo "deb http://ftp.debian.org/debian bookworm main contrib" >> /etc/apt/sources.list
 		apt update
 		apt upgrade -y
 		apt dist-upgrade
