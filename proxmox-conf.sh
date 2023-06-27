@@ -7,7 +7,7 @@ version=V002.R001
 
 clear
 echo -e "\033[33m *********************************************************************************** \033[0m"
-echo -e "\033[33m * Atenção! O uso do script fornecido é de inteira responsabilidade do utilizador. *\n * A pessoa ou empresa que forneceu o script não será responsável por quaisquer      *\n \033[31m* problemas ou danos causados\033[33m pelo uso do mesmo.                             *\033[0m"
+echo -e "\033[33m * Atenção! O uso do script fornecido é de inteira responsabilidade do utilizador. *\n * A pessoa ou empresa que forneceu o script não será responsável por quaisquer    *\n \033[31m* problemas ou danos causados\033[33m pelo uso do mesmo.                             *\033[0m"
 echo -e " "
 echo -e "\033[33m  Antes de utilizar o script, é importante que você faça uma avaliação cuidadosa e\n compreenda as implicações do seu uso. \033[31mCertifique-se de que o script é\n seguro e adequado\033[33m para as suas necessidades antes de utilizá-lo.\033[0m"
 echo -e " "
