@@ -1,174 +1,159 @@
-# Proxmox Management Scripts
+# Proxmox Toolkit NG (Nova Geração)
 
-This repository contains a collection of shell scripts designed to simplify the management and configuration of Proxmox Virtual Environment (PVE) and Proxmox Backup Server (PBS).
+Este repositório contém uma coleção de scripts shell projetados para simplificar a gestão e configuração do Proxmox Virtual Environment (PVE) e Proxmox Backup Server (PBS) através de uma interface de menu interativa.
 
 ## ⚠️ Important Disclaimer ⚠️
 
-**These scripts are provided AS-IS, without any warranty of any kind, express or implied.**
+**Estes scripts são fornecidos COMO ESTÃO, sem qualquer garantia de qualquer tipo, expressa ou implícita.**
 
-**The user assumes ALL RESPONSIBILITY AND RISK for the use of these scripts.** The author(s) or contributor(s) are not responsible for any damage, data loss, or system instability that may arise from their use, even if due to errors within the scripts themselves.
+**O usuário assume TODA A RESPONSABILIDADE E RISCO pelo uso destes scripts.** O(s) autor(es) ou contribuidor(es) não são responsáveis por quaisquer danos, perda de dados ou instabilidade do sistema que possam surgir do seu uso, mesmo que devido a erros nos próprios scripts.
 
-It is **STRONGLY RECOMMENDED** that you:
-*   Thoroughly understand what each script and option does before execution.
-*   Test them in a non-production environment first.
-*   Have adequate backups of your systems and data.
+É **FORTEMENTE RECOMENDADO** que você:
+*   Entenda completamente o que cada script e opção faz antes da execução.
+*   Teste-os em um ambiente de não produção primeiro.
+*   Tenha backups adequados de seus sistemas e dados.
 
-**By choosing to use these scripts, you acknowledge and accept these terms and risks.**
+**Ao optar por usar estes scripts, você reconhece e aceita estes termos e riscos.**
 
-These scripts are inspired by the `proxmox_toolbox` by Tontonjo.
+Este projeto é uma refatoração e modularização do script `proxmox-conf.sh` originalmente inspirado no `proxmox_toolbox` de Tontonjo.
 
-## Detailed Functionality of `proxmox-conf.sh`
+## Estrutura Modular
 
-The `proxmox-conf.sh` script is the centerpiece of this repository. It is a comprehensive, menu-driven shell script that acts as an interactive toolbox for managing both Proxmox Virtual Environment (PVE) and Proxmox Backup Server (PBS). Upon execution, it presents a main menu where users can choose between PVE or PBS management, leading to further sub-menus with specific operations.
+O Proxmox Toolkit NG foi refatorado de um script monolítico para uma estrutura modular, proporcionando maior flexibilidade e facilidade de manutenção. Cada funcionalidade acessível através dos menus é agora um script individual localizado dentro de uma estrutura de diretórios organizada.
+
+A estrutura principal do projeto é a seguinte:
+
+*   **`/TcTI/PROXMOX_TOOLKIT/proxmox-launcher.sh`**: O ponto de entrada principal para o toolkit. Este é o script que você executará para iniciar a interface do menu.
+*   **`/TcTI/PROXMOX_TOOLKIT/modules/common/`**: Contém scripts e variáveis compartilhadas usadas por múltiplos módulos (ex: `variables.sh`).
+*   **`/TcTI/PROXMOX_TOOLKIT/modules/pve/`**: Contém módulos específicos para Proxmox VE, organizados em subdiretórios por categoria:
+    *   `update/` (atualizações, upgrades)
+    *   `disk/` (ferramentas de disco)
+    *   `backup/` (tarefas de backup)
+    *   `email/` (configuração de email)
+    *   `tweaks/` (ajustes de sistema, VM, GUI, watchdog, etc.)
+    *   `network/` (configuração de rede)
+    *   `info/` (comandos e informações úteis)
+*   **`/TcTI/PROXMOX_TOOLKIT/modules/pbs/`**: Contém módulos específicos para Proxmox Backup Server, organizados de forma similar:
+    *   `update/`
+    *   `disk/`
+    *   `email/`
+    *   `tweaks/`
+    *   `network/`
+*   **`/TcTI/PROXMOX_TOOLKIT/versions/`**:
+    *   `manifest.txt`: (Simulado no repositório, mas representa o manifesto remoto) Define as versões mais recentes de cada módulo.
+    *   `local_manifest.txt`: Armazena as versões dos módulos atualmente instalados localmente.
+
+## Mecanismo de Atualização
+
+O Proxmox Toolkit NG inclui um mecanismo para manter os módulos atualizados:
+
+1.  **Verificação na Inicialização**: Ao executar `proxmox-launcher.sh`, ele primeiro chama uma função `check_for_updates()`.
+2.  **Manifesto Remoto**: Esta função (atualmente) simula o download de um arquivo `manifest.txt` (localizado em `/TcTI/PROXMOX_TOOLKIT/versions/manifest.txt`, que por sua vez é preenchido pelo `cria-estrutura-NG.sh` a partir do arquivo no repositório) que atua como a "fonte da verdade" para as versões mais recentes de cada script modular.
+3.  **Comparação e Download Individual**:
+    *   O launcher compara as versões no manifesto "remoto" com as versões registradas em `local_manifest.txt` (ou se o arquivo local não existir/script estiver faltando).
+    *   Se um script estiver desatualizado ou faltando, o launcher (atualmente) simula o download do módulo individualmente a partir de um caminho base (assumindo que os scripts atualizados estão disponíveis no repositório na mesma estrutura de caminhos). Na prática real, usaria `wget` ou `curl`.
+    *   Após um "download" bem-sucedido, o `local_manifest.txt` é atualizado com a nova versão do script.
+4.  **Atualização do Launcher**:
+    *   O mecanismo de atualização atual foca nos módulos. Se houver mudanças significativas no próprio `proxmox-launcher.sh` ou no `check_for_updates()`, pode ser necessário reexecutar `cria-estrutura-NG.sh` para obter a versão mais recente do launcher e do manifesto mestre.
+    *   O script `cria-estrutura-NG.sh` também é versionado no `manifest.txt`, então o `check_for_updates` notificará se uma nova versão do `cria-estrutura-NG.sh` estiver disponível, sugerindo uma atualização manual.
+
+## Instalação e Uso
+
+1.  **Configuração Inicial**:
+    *   Baixe o script `cria-estrutura-NG.sh` do repositório.
+    *   Torne-o executável: `chmod +x cria-estrutura-NG.sh`.
+    *   Execute-o com privilégios de root: `sudo ./cria-estrutura-NG.sh`.
+    *   Este script criará a estrutura de diretórios necessária em `/TcTI/PROXMOX_TOOLKIT/`, "baixará" (copiará localmente na simulação) o `proxmox-launcher.sh` e o `versions/manifest.txt`.
+
+2.  **Execução do Toolkit**:
+    *   Após a configuração inicial, execute o launcher principal:
+        ```bash
+        sudo /TcTI/PROXMOX_TOOLKIT/proxmox-launcher.sh
+        ```
+    *   Na primeira execução (e em execuções subsequentes), o launcher verificará por atualizações dos módulos conforme descrito no "Mecanismo de Atualização".
+
+## Scripts Principais do Toolkit NG
+
+*   **`cria-estrutura-NG.sh`**:
+    *   **Função**: Script de configuração inicial.
+    *   **Descrição**: Prepara o ambiente criando a nova estrutura de diretórios em `/TcTI/PROXMOX_TOOLKIT/`. Simula o download do `proxmox-launcher.sh` e do `versions/manifest.txt` para seus respectivos locais. Define permissões de execução para o launcher. **Este script substitui o antigo `cria-estrutura`.**
+
+*   **`proxmox-launcher.sh`**:
+    *   **Função**: Ponto de entrada principal e gerenciador de menus.
+    *   **Descrição**: Apresenta o menu principal para selecionar entre gerenciamento PVE ou PBS. Contém o mecanismo de atualização de módulos e chama os scripts modulares apropriados com base na seleção do usuário. **Este script substitui a funcionalidade de menu e atualização do antigo `proxmox-ini.sh` e a maior parte do `proxmox-conf.sh`.**
+
+*   **Módulos (`modules/**/*.sh`)**:
+    *   **Função**: Scripts individuais para cada funcionalidade específica.
+    *   **Descrição**: Contêm a lógica real para as tarefas de gerenciamento, como atualizações, configuração de disco, etc. As funcionalidades do antigo `proxmox-conf.sh` foram migradas para estes módulos.
+
+### Scripts Depreciados
+
+*   `cria-estrutura`: O script de configuração original. **Use `cria-estrutura-NG.sh` em vez deste.**
+*   `proxmox-ini.sh`: O antigo script de atualização e inicialização. Sua funcionalidade de atualização de scripts foi incorporada ao `proxmox-launcher.sh`, e a inicialização é feita diretamente pelo `proxmox-launcher.sh`.
+*   `proxmox-conf.sh` (monolítico): O script principal original. Suas funcionalidades foram divididas nos diversos módulos dentro de `modules/pve/` e `modules/pbs/`.
+
+## Funcionalidades Detalhadas (via Módulos)
+
+O `proxmox-launcher.sh` organiza o acesso às seguintes funcionalidades, agora implementadas como módulos individuais:
 
 ### Proxmox Virtual Environment (PVE) Management
-
-For PVE, the script offers the following categories of operations:
-
+(As seções de funcionalidades PVE e PBS permanecem relevantes, pois descrevem o que os módulos fazem)
 1.  **Updates, Installation & Upgrade:**
     *   Handles system updates and upgrades (e.g., from PVE 5.x to 6.x, 6.x to 7.x, 7.x to 8.x).
-    *   Installs commonly used applications and utilities (e.g., `libsasl2-modules`, `lm-sensors`, `ifupdown2`, `ntfs-3g`, `ethtool`, `zip`, `mutt`).
-    *   Manages Proxmox repository configurations (e.g., switching to no-subscription repositories).
+    *   Installs commonly used applications and utilities.
+    *   Manages Proxmox repository configurations.
 
 2.  **Disk Management:**
-    *   Configures disks for use as PVE storage: formats disks (ext4), creates mount points, updates `/etc/fstab`, and adds storage to PVE (`pvesm add dir`).
-    *   Performs disk speed tests using `hdparm`.
-    *   Checks for bad sectors using `badblocks`.
-    *   Retrieves S.M.A.R.T. disk health status using `smartctl`.
-    *   Removes the `local-lvm` storage and resizes the `root` partition.
+    *   Configures disks for use as PVE storage.
+    *   Performs disk speed tests, bad sector checks, S.M.A.R.T. status.
+    *   Manages LVM storage.
 
 3.  **Backup Tasks:**
-    *   Configures the host as an NFS server to allow network backups from other Proxmox servers.
-    *   Installs Proxmox Backup Server (PBS) alongside PVE on the same host.
-    *   Schedules automated backups of PVE host configuration files (e.g., `/etc/pve`, `/etc/network/interfaces`, cron jobs, VM configurations).
-    *   Restores PVE host configuration files from a backup.
+    *   Configures NFS for backups, installs PBS alongside PVE.
+    *   Schedules and restores PVE host configuration backups.
 
 4.  **Email Configuration:**
-    *   Configures Postfix for sending email notifications.
-    *   Allows setting up mail server details, authentication, and sender/receiver addresses.
-    *   Includes options to test email setup and check mail logs for troubleshooting.
-    *   Provides functionality to restore original Postfix configurations.
+    *   Configures Postfix for email notifications.
 
 5.  **System Tweaks & Adjustments:**
-    *   Monitors hardware temperature using `lm-sensors`.
-    *   Manages Virtual Machines (VMs): unlocks stuck VMs, forcefully stops VMs, and restarts VMs.
-    *   Configures system SWAP behavior (swappiness).
-    *   Displays detailed host information (system load, memory usage, uptime, IP address, disk space).
-    *   Installs/uninstalls the `proxmox-conf.sh` script to run automatically on user login.
-    *   Installs a desktop environment (XFCE) and Chromium browser for accessing the PVE web UI locally.
-    *   Configures watchdog services to monitor and automatically restart VMs if they become unresponsive.
+    *   Monitors temperature, manages VMs (unlock, stop, start).
+    *   Configures SWAP, displays host info.
+    *   Installs/uninstalls login script, GUI, watchdog.
 
 6.  **Network Configuration:**
-    *   Provides shortcuts to edit network interface files (`/etc/network/interfaces`).
-    *   Allows editing DNS resolver configuration (`/etc/resolv.conf`).
-    *   Facilitates editing the local hosts file (`/etc/hosts`).
+    *   Edits network interfaces, DNS, and hosts file.
 
 7.  **Useful Commands & Information:**
-    *   Displays a list of commonly used Linux and PVE commands.
-    *   Provides quick access to important PVE file paths (e.g., VM configuration files, ISO template locations).
+    *   Lists common Linux/PVE commands and paths.
 
 ### Proxmox Backup Server (PBS) Management
 
-For PBS, the script offers a similar, tailored set of functionalities:
-
 1.  **Updates, Installation & Upgrade:**
-    *   Handles system updates and upgrades (e.g., from PBS 1.x to 2.x).
-    *   Installs essential applications (e.g., `libsasl2-modules`, `lm-sensors`, `ifupdown2`, `ethtool`, `hdparm`).
-    *   Manages PBS repository configurations.
+    *   Handles system updates and PBS version upgrades.
+    *   Installs essential applications.
 
 2.  **Disk Management:**
-    *   Configures disks for use as PBS datastores: formats disks (ext4), creates mount points, updates `/etc/fstab`, and adds datastores to PBS (`proxmox-backup-manager datastore create`).
-    *   Performs disk speed tests using `hdparm`.
-    *   Checks for bad sectors using `badblocks`.
-    *   Retrieves S.M.A.R.T. disk health status using `smartctl`.
+    *   Configures disks for PBS datastores.
+    *   Performs disk speed tests, bad sector checks, S.M.A.R.T. status.
 
 3.  **Email Configuration:**
-    *   Configures Postfix for sending email notifications (similar to the PVE email configuration).
-    *   Allows setting up mail server details, authentication, and sender/receiver addresses.
-    *   Includes options to test email setup and check mail logs.
+    *   Configures Postfix for email notifications.
 
 4.  **System Tweaks & Adjustments:**
-    *   Monitors hardware temperature using `lm-sensors`.
-    *   Configures system SWAP behavior.
-    *   Displays detailed host information.
-    *   Installs/uninstalls the `proxmox-conf.sh` script to run automatically on user login.
+    *   Monitors temperature, manages SWAP, displays host info.
+    *   Installs/uninstalls login script.
 
 5.  **Network Configuration:**
-    *   Provides shortcuts to edit network interface files.
-    *   Allows editing DNS resolver configuration.
-    *   Facilitates editing the local hosts file.
+    *   Edits network interfaces, DNS, and hosts file.
 
-## Scripts in this Repository
+## Propósito
 
-This repository contains three main scripts:
+O objetivo principal destes scripts é consolidar tarefas comuns de gerenciamento do Proxmox PVE e PBS em uma interface shell interativa e fácil de usar, reduzindo a necessidade de operações manuais na linha de comando para procedimentos de rotina.
 
-*   **`cria-estrutura`**:
-    *   **Role**: Initial Setup Script.
-    *   **Description**: This script is intended to be run first. It prepares the environment by creating the necessary directory structure (`/TcTI/SCRIPTS/`), then downloads `proxmox-ini.sh` into this directory, makes it executable, and runs it. This effectively bootstraps the system for using the other scripts.
+## Público Alvo
 
-*   **`proxmox-ini.sh`**:
-    *   **Role**: Updater and Launcher Script.
-    *   **Description**: This script acts as an intermediary. Its primary function is to ensure that you are always using the latest version of the main configuration script. It does this by backing up any existing `proxmox-conf.sh`, downloading the newest version from this GitHub repository, making it executable, and then immediately running `proxmox-conf.sh`.
+Estes scripts destinam-se principalmente a **administradores de sistemas** e **profissionais de TI** responsáveis pela implantação, gerenciamento e manutenção de instâncias Proxmox VE e Proxmox Backup Server.
 
-*   **`proxmox-conf.sh`**:
-    *   **Role**: Main Interactive Management Script.
-    *   **Description**: This is the core script of the repository. It provides a comprehensive, menu-driven interface for managing various aspects of Proxmox VE (PVE) and Proxmox Backup Server (PBS). Its features are detailed in the "Detailed Functionality of `proxmox-conf.sh`" section above.
+## Conclusão
 
-## Purpose
-
-The main goal of these scripts is to consolidate common Proxmox PVE and PBS management tasks into an easy-to-use, interactive shell interface, reducing the need for manual command-line operations for routine procedures. This can be particularly helpful for users who prefer guided menus or want to automate common setup and maintenance tasks.
-
-## Target Audience
-
-These scripts are primarily intended for **system administrators** and **IT professionals** who are responsible for deploying, managing, and maintaining Proxmox Virtual Environment (PVE) and Proxmox Backup Server (PBS) instances. The toolbox is designed to simplify routine tasks and configurations for users who:
-
-*   Manage one or more Proxmox servers.
-*   Prefer a menu-driven interface for common operations.
-*   Want to streamline setup and configuration processes.
-*   Need to perform tasks like PVE/PBS updates, disk management, backup configuration, and system monitoring.
-
-While the scripts can be used by anyone interested in learning more about Proxmox management, a basic understanding of Linux command-line and Proxmox concepts is beneficial.
-
-## Update Mechanism: Staying Current
-
-The scripts are designed to ensure that you can easily run the latest version of the main `proxmox-conf.sh` script with minimal manual intervention. This is achieved through the interaction of `cria-estrutura` and `proxmox-ini.sh`:
-
-1.  **Initial Setup (`cria-estrutura`)**:
-    *   When you first obtain the scripts, you typically start by running `cria-estrutura`.
-    *   This script performs a one-time setup: it creates a dedicated directory (usually `/TcTI/SCRIPTS/`) on your Proxmox host.
-    *   It then downloads `proxmox-ini.sh` directly from the [TcTI-BR/PROXMOX-SCRIPTS](https://github.com/TcTI-BR/PROXMOX-SCRIPTS) GitHub repository into this directory.
-    *   Finally, it makes `proxmox-ini.sh` executable and runs it.
-
-2.  **Fetching/Updating and Launching (`proxmox-ini.sh`)**:
-    *   Each time `proxmox-ini.sh` is executed (either directly by the user after the initial setup, or as the last step of `cria-estrutura`), it performs the following actions:
-        *   It backs up your current `proxmox-conf.sh` script (if one exists in `/TcTI/SCRIPTS/`) to `proxmox-conf-bkp.sh`. This preserves any local modifications you might have made, though it's generally recommended to contribute improvements back to the main repository.
-        *   It downloads the latest version of `proxmox-conf.sh` from the `main` branch of the [TcTI-BR/PROXMOX-SCRIPTS](https://github.com/TcTI-BR/PROXMOX-SCRIPTS) GitHub repository, placing it in `/TcTI/SCRIPTS/`.
-        *   It makes this newly downloaded `proxmox-conf.sh` executable.
-        *   It then immediately executes `/TcTI/SCRIPTS/proxmox-conf.sh`, launching the main menu-driven interface.
-
-**In essence**:
-*   `cria-estrutura` is for the very first setup.
-*   `proxmox-ini.sh` is the script you will typically run thereafter. It acts as an "updater and launcher," ensuring that `proxmox-conf.sh` is always fetched from the repository before being run. This means you don't need to manually download `proxmox-conf.sh` every time there's an update.
-
-This mechanism ensures that bug fixes, new features, and improvements made to `proxmox-conf.sh` in the GitHub repository are easily accessible by simply re-running `proxmox-ini.sh`.
-
-## Usage
-
-1.  It's recommended to first run `cria-estrutura` on your Proxmox host. This script will create the `/TcTI/SCRIPTS` directory, download `proxmox-ini.sh`, and execute it.
-    ```bash
-    # Example of how you might download and run cria-estrutura
-    # wget https://raw.githubusercontent.com/TcTI-BR/PROXMOX-SCRIPTS/main/cria-estrutura
-    # chmod +x cria-estrutura
-    # ./cria-estrutura
-    ```
-2.  Subsequently, `proxmox-ini.sh` (typically located in `/TcTI/SCRIPTS/`) can be run. It will automatically download the latest `proxmox-conf.sh` and launch the main menu.
-    ```bash
-    # Example:
-    # /TcTI/SCRIPTS/proxmox-ini.sh
-    ```
-
-The main script `proxmox-conf.sh` will then guide you through its various options for PVE and PBS management.
-
-## Conclusion
-
-This repository provides a valuable toolkit for Proxmox VE and PBS administrators seeking to simplify and streamline their server management tasks. By offering a menu-driven interface for a wide array of common operations, from initial setup and updates to disk management, backups, and system tweaks, these scripts aim to save time, reduce repetitive manual work, and make Proxmox administration more accessible. With the built-in update mechanism, users can easily stay current with the latest enhancements and features of the main `proxmox-conf.sh` script.
+Este repositório fornece um valioso conjunto de ferramentas para administradores Proxmox VE e PBS que buscam simplificar e agilizar suas tarefas de gerenciamento de servidores. Com o mecanismo de atualização integrado, os usuários podem facilmente manter-se atualizados com as últimas melhorias e funcionalidades dos módulos.
